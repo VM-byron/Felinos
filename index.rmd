@@ -11,8 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 # Preparativos  
-
-
 ``` {r}
 library(dplyr)
 library(sf)
@@ -63,3 +61,28 @@ felinos %>%
 
 ```
 # Gráfico   
+
+``` {r grafico, echo = FALSE}
+grafico_barras <-
+felinos %>%
+  ggplot(aes(x = species)) +
+  geom_bar() 
+
+ggplotly(grafico_barras)
+``` 
+
+
+# Mapa
+
+``` {r mapa, message=FALSE, echo=FALSE}
+# Mapa leaflet básico de provincias y registros de presencia de felinos
+leaflet() %>%
+  addTiles() %>% # capa base de OSM
+  addCircleMarkers( # capa de registros de presencia (puntos)
+    data = felinos,
+    stroke = F,
+    radius = 4,
+    fillColor = 'blue',
+    fillOpacity = 1
+  )
+```
